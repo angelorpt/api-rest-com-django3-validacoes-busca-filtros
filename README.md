@@ -1,8 +1,8 @@
-# API REST com Django3
+# API REST com Django3: Validações, buscas, filtros
 
 ## Detalhes
 
-Projeto baseado em curso da Alura
+Projeto baseado em um curso da Alura de Django3
 
 [API com Django 3: Validações, buscas, filtros e deploy](https://cursos.alura.com.br/course/api-django-3-validacoes-buscas-filtros-deploy)
 
