@@ -79,3 +79,45 @@ class ClienteSerializer(serializers.ModelSerializer):
         if len(cpf) != 11:
             raise serializers.ValidationError("O CPF deve possuir 11 dígitos")
 ```
+
+**Separando a responsabilidade da validação em outro arquivo**
+
+* validators.py
+
+```python
+def cpf_valido(numero_cpf):
+    return len(numero_cpf) == 11
+
+def nome_valido(nome):
+    return nome.isalpha()
+
+def rg_valido(numero_rg):
+    return len(numero_rg) == 9
+
+def celular_valido(numero_celular):
+    return len(celular) > 11
+```
+
+* serializers.py
+
+```python
+...
+from clientes.validators import *
+
+class ClienteSerializer(serializers.ModelSerializer):
+    ...
+    def validate(self, data):
+        if not cpf_valido(data['cpf']):
+            raise serializers.ValidationError({'cpf': "O CPF deve ter 11 dígitos"})
+
+        if not nome_valido(data['nome'])
+            raise serializers.ValidationError({'nome': "Não inclua números neste campo"})
+
+        if not rg_valido(data['rg']):
+            raise serializers.ValidationError({'rg': "O RG deve possuir 9 dígitos"})
+
+        if not celular_valido(data['celular'])
+            raise serializers.ValidationError({'celular': "O celular deve possuir 11 dígitos"})
+        
+        return data
+```
