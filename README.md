@@ -48,3 +48,34 @@ $ django-admin startproject setup .
 ```bash
 $ python manage.py runserver
 ```
+
+## Validações
+
+[DOC - Validações Django REST Framework](https://www.django-rest-framework.org/api-guide/validators/)
+
+**Visualizando a instância do Serializer e as validações importadas do Model**
+```bash
+$ python manage.py shell
+
+>>>from clientes.serializers import ClienteSerializer
+>>>s = ClienteSerializer()
+>>>print(repr(s))
+
+ClienteSerializer():
+    id = IntegerField(label='ID', read_only=True)
+    nome = CharField(max_length=100)
+    email = EmailField(max_length=30)
+    cpf = CharField(max_length=11, validators=[<UniqueValidator(queryset=Cliente.objects.all())>])
+    rg = CharField(max_length=9)
+    celular = CharField(max_length=14)
+    ativo = BooleanField()
+```
+
+**Validando a quantidade de dígitos do CPF "serializers.py"**
+```python
+class ClienteSerializer(serializers.ModelSerializer):
+    ...
+    def validate_cpf(self, cpf):
+        if len(cpf) != 11:
+            raise serializers.ValidationError("O CPF deve possuir 11 dígitos")
+```
