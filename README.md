@@ -243,3 +243,30 @@ class ClientesViewSet(viewsets.ModelViewSet):
     search_fields = ['nome', 'cpf']
     filterset_fields = ['ativo']    
 ```
+
+## Deploy no heroku
+
+**Preparando para deploy**
+```bash
+$ pip install django-heroku
+```
+
+**No arquivo "settings.py"**
+```python
+import django_heroku
+...
+django_heroku.settings(locals())
+```
+
+**Instalando Gunicorn**
+
+[https://gunicorn.org/](https://gunicorn.org/)
+
+```bash
+$ pip install gunicorn
+```
+
+**Atualizando o arquivo "requirements.txt"**
+```bash
+$ pip freeze > requirements.txt
+```
