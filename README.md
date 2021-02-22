@@ -199,3 +199,46 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 ```
+
+## Ordenando
+
+### Admin
+
+**Alterando a ordenação no Admin: "admin.py"**
+```python
+...
+class Clientes(admin.ModelAdmin):
+    ...
+    ordering = ('nome',)
+```
+
+### API
+
+[DOC - Filtering](https://www.django-rest-framework.org/api-guide/filtering/)
+
+1. Alterando a ordenação na API
+```bash
+$ pip install django-filter
+```
+
+2. No arquivo "settings.py" adicionar o app
+```python
+INSTALLED_APPS = [
+    ...
+    'django_filters',
+]
+```
+
+3. No arquivo "views.py"
+
+```python
+from rest_framework import ..., filters
+...
+from django_filters.rest_framework import DjangoFilterBackend
+
+class ClientesViewSet(viewsets.ModelViewSet):
+    ...
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['nome']
+
+```
