@@ -128,3 +128,13 @@ class ClienteSerializer(serializers.ModelSerializer):
 $ pip install validate-docbr
 ```
 
+* No arquivo "validator.py"
+
+```python
+...
+from validate_docbr import CPF
+
+def cpf_valido(numero_cpf):
+    cpf = CPF()
+    return cpf.validate(numero_cpf)
+```
