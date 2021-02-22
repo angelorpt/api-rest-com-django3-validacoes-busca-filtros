@@ -124,6 +124,8 @@ class ClienteSerializer(serializers.ModelSerializer):
 
 **Instalando a biblioteca de validação de documentos**
 
+[DOC - Validate DOC_BR](https://pypi.org/project/validate-docbr/)
+
 ```bash
 $ pip install validate-docbr
 ```
@@ -138,3 +140,50 @@ def cpf_valido(numero_cpf):
     cpf = CPF()
     return cpf.validate(numero_cpf)
 ```
+
+## Populando o Banco com Dados Fictícios
+
+[DOC - Faker](https://faker.readthedocs.io/en/master/)
+
+**Instalando a biblioteca faker**
+
+```bash
+$ pip install Faker
+```
+
+**Criar um arquivo na raiz do projeto: "populate_script.py"**
+
+```python
+import os, django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
+django.setup()
+
+from faker import Faker
+from validate_docbr import CPF
+import random
+from clientes.models import Cliente
+
+def criando_pessoas(quantidade_de_pessoas):
+    fake = Faker('pt_BR')
+    Faker.seed(10)
+    for _ in range(quantidade_de_pessoas):
+        cpf = CPF()
+        nome = fake.name()
+        email = '{}@{}'.format(nome.lower(),fake.free_email_domain())
+        email = email.replace(' ', '')
+        cpf = cpf.generate()
+        rg = "{}{}{}{}".format(random.randrange(10, 99),random.randrange(100, 999),random.randrange(100, 999),random.randrange(0, 9) ) 
+        celular = "{} 9{}-{}".format(random.randrange(10, 21), random.randrange(4000, 9999), random.randrange(4000, 9999))
+        ativo = random.choice([True, False])
+        p = Cliente(nome=nome, email=email, cpf=cpf, rg=rg, celular=celular, ativo=ativo)
+        p.save()
+
+criando_pessoas(50)
+```
+
+**Executando o script**
+```bash
+$ python populate_script.py
+```
+
