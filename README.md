@@ -270,3 +270,26 @@ $ pip install gunicorn
 ```bash
 $ pip freeze > requirements.txt
 ```
+
+
+**Comandos para deploy no heroku**
+
+1. Vinculando um repositório Heroku
+```bash
+$ heroku git:remote -a heroku_app_name
+```
+
+2. Enviando o projeto para heroku
+```bash
+$ git push heroku main
+```
+
+3. Migrando as tabelas para o banco
+```bash
+$ heroku run python manage.py migrate
+```
+
+4. Criando o super-user
+```bash
+$ heroku run python manage.py createsuperuser
+```
