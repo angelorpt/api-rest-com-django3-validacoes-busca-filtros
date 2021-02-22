@@ -121,3 +121,10 @@ class ClienteSerializer(serializers.ModelSerializer):
         
         return data
 ```
+
+**Instalando a biblioteca de validação de documentos**
+
+```bash
+$ pip install validate-docbr
+```
+
