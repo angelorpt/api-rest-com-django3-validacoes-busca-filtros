@@ -187,3 +187,15 @@ criando_pessoas(50)
 $ python populate_script.py
 ```
 
+## Paginação da API
+
+[DOC - Paginação](https://www.django-rest-framework.org/api-guide/pagination/)
+
+**Alterando a paginação no arquivo "settings.py"**
+```python
+...
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+```
